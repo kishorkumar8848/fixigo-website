@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-sans);
+  
+  /* Brand-specific colors matching the logo blue */
+  --color-brand-blue-50: #f0f4ff;
+  --color-brand-blue-100: #e0e8ff;
+  --color-brand-blue-500: #3b71f7;
+  --color-brand-blue-600: #1D58F6; /* Exact Logo Royal Blue */
+  --color-brand-blue-700: #1444c9;
+  
+  --color-brand-sky-50: #f0f9ff;
+  --color-brand-sky-500: #0ea5e9;
+  --color-brand-sky-600: #0284c7;
+}
+
+/* Custom styling variables matching White & Blue theme */
+:root {
+  --grid-color: rgba(29, 88, 246, 0.04);
+}
+
+.dark {
+  --grid-color: rgba(29, 88, 246, 0.02);
+}
+
+/* Grid background helper for premium design details */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+}
+
+/* Float animations for cards and app screens */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes float-delayed {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 7s ease-in-out infinite;
+}
+
+/* Custom horizontal scroll hiding */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* High-fidelity glowing radial highlights */
+.radial-glow {
+  background: radial-gradient(circle at 50% 50%, rgba(29, 88, 246, 0.12) 0%, rgba(59, 130, 246, 0.03) 50%, transparent 100%);
+}
+
+.radial-glow-dark {
+  background: radial-gradient(circle at 50% 50%, rgba(29, 88, 246, 0.08) 0%, rgba(59, 130, 246, 0.01) 60%, transparent 100%);
+}
+
+/* Custom selection styling */
+::selection {
+  background-color: rgba(29, 88, 246, 0.2);
+  color: inherit;
+}

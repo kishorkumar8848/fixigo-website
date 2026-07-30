@@ -1,10 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { ArrowRight, ArrowDownToLine } from "lucide-react";
 import Image from "next/image";
+import ComingSoonPopup from "@/components/ui/ComingSoonPopup";
 
 export default function Hero() {
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleDownloadClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowPopup(true);
+  };
+
   return (
     <section id="home" className="relative overflow-hidden pt-32 pb-16 lg:pt-40 lg:pb-24 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
@@ -44,15 +52,14 @@ export default function Hero() {
 
             {/* CTA Buttons */}
             <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-5">
-              <a
+              <button
                 id="download-btn"
-                href="/downloads/fixigo.apk"
-                download
+                onClick={handleDownloadClick}
                 className="px-7 py-3.5 bg-slate-950 hover:bg-slate-900 text-white rounded-full font-bold transition-all duration-200 flex items-center gap-2.5 text-base cursor-pointer"
               >
                 <span>Download Android App</span>
                 <ArrowDownToLine className="h-5 w-5" />
-              </a>
+              </button>
               <a
                 href="#how-it-works"
                 onClick={(e) => {
@@ -81,6 +88,9 @@ export default function Hero() {
 
         </div>
       </div>
+
+      {/* Coming Soon Popup */}
+      <ComingSoonPopup isOpen={showPopup} onClose={() => setShowPopup(false)} />
     </section>
   );
 }

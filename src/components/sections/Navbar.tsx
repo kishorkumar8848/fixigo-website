@@ -2,11 +2,19 @@
 
 import React, { useState, useEffect } from "react";
 import { Wrench, Menu, X, ArrowDownToLine } from "lucide-react";
+import ComingSoonPopup from "@/components/ui/ComingSoonPopup";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleDownloadClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowPopup(true);
+    setMobileMenuOpen(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -99,14 +107,13 @@ export default function Navbar() {
 
           {/* Download App CTA */}
           <div className="hidden md:flex items-center">
-            <a
-              href="/downloads/fixigo.apk"
-              download
+            <button
+              onClick={handleDownloadClick}
               className="px-6 py-2.5 bg-slate-950 hover:bg-slate-900 text-white rounded-full font-semibold transition-all duration-200 flex items-center gap-2 text-sm cursor-pointer"
             >
               <span>Download App</span>
               <ArrowDownToLine className="h-4 w-4" />
-            </a>
+            </button>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -138,17 +145,18 @@ export default function Navbar() {
             </a>
           ))}
           <hr className="border-slate-100" />
-          <a
-            href="/downloads/fixigo.apk"
-            download
-            onClick={() => setMobileMenuOpen(false)}
+          <button
+            onClick={handleDownloadClick}
             className="w-full text-center px-6 py-2.5 bg-slate-950 text-white rounded-full font-semibold flex items-center justify-center gap-2 text-sm"
           >
             <span>Download App</span>
             <ArrowDownToLine className="h-4 w-4" />
-          </a>
+          </button>
         </div>
       )}
+
+      {/* Coming Soon Popup */}
+      <ComingSoonPopup isOpen={showPopup} onClose={() => setShowPopup(false)} />
     </>
   );
 }

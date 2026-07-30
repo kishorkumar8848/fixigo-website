@@ -192,24 +192,66 @@ export const APP_CONFIG = {
     }
   ],
 
-  // Frequently Asked Questions (Removed Resale questions)
+  // Frequently Asked Questions
+  faqCategories: [
+    { id: "general", label: "General" },
+    { id: "services", label: "Services" },
+    { id: "booking", label: "Booking & Payment" },
+    { id: "warranty", label: "Warranty" },
+    { id: "account", label: "Account" },
+  ],
+
   faqs: [
     {
+      category: "general",
+      question: "What is Fixigo?",
+      answer: "Fixigo is a smart appliance care platform that connects you with verified technicians for repairs, maintenance, installation, and warranty management — all from one app."
+    },
+    {
+      category: "general",
+      question: "How do I book a service?",
+      answer: "Open the Fixigo app, select your appliance type, describe the issue, choose a convenient time slot, and confirm your booking. A verified technician will be assigned within minutes."
+    },
+    {
+      category: "general",
+      question: "How do I track my technician?",
+      answer: "Once a technician is assigned, you can track their live location on the in-app map. You'll receive real-time updates on their ETA and arrival status."
+    },
+    {
+      category: "general",
       question: "Which home appliances does Fixigo service?",
-      answer: "We support a wide array of appliances including Air Conditioners, Refrigerators, Washing Machines, Microwaves/Ovens, Chimneys, Water Purifiers, and Geysers. We service all major global and national brands."
+      answer: "We support Air Conditioners, Refrigerators, Washing Machines, Microwaves/Ovens, Chimneys, Water Purifiers, and Geysers from all major brands."
     },
     {
+      category: "services",
       question: "Are your technicians qualified and insured?",
-      answer: "Yes, every technician is a licensed specialist. They undergo background checks, criminal record verification, and intense practical skills tests at our regional training academies. All on-site repairs are also covered by our platform insurance."
+      answer: "Yes, every technician undergoes background checks, criminal record verification, and practical skills tests. All on-site repairs are covered by our platform insurance."
     },
     {
+      category: "services",
+      question: "Do you use genuine spare parts?",
+      answer: "Absolutely. We only use 100% genuine, brand-authorized components sourced directly from official manufacturer channels, backed by a parts warranty."
+    },
+    {
+      category: "booking",
+      question: "Can I book emergency or same-day repairs?",
+      answer: "Yes, you can schedule an emergency service in the app. For standard AC, washing machine, and geyser repairs, a verified technician will arrive within 2 hours."
+    },
+    {
+      category: "booking",
+      question: "What payment methods do you accept?",
+      answer: "We accept credit/debit cards, UPI, and net banking. Payment is processed securely in the app, and you receive a digital invoice instantly."
+    },
+    {
+      category: "warranty",
       question: "How does the 90-day warranty policy work?",
-      answer: "When we repair an appliance, the specific parts replaced and our labor are automatically covered for 90 days. If the same issue reoccurs within this period, we fix it again free of cost. Warranty claims can be submitted with one tap."
+      answer: "When we repair an appliance, the parts replaced and our labor are covered for 90 days. If the same issue reoccurs within this period, we fix it again free of cost."
     },
     {
-      question: "Can I book emergency or same-day repair bookings?",
-      answer: "Yes, you can schedule an emergency service in the app. For standard AC, washing machine, and geyser repair options, our verified technician will be dispatched and arrive within 2 hours."
-    }
+      category: "account",
+      question: "How do I create a Fixigo account?",
+      answer: "Download the Fixigo app from Google Play, sign up with your phone number, and verify via OTP. Your account is ready to book services immediately."
+    },
   ],
 
   // Contact / Footer info
@@ -218,28 +260,38 @@ export const APP_CONFIG = {
     phone: "",
     address: "Fixigo Technologies Pvt. Ltd., Chennai, Tamil Nadu, India",
     socials: [
-      { name: "LinkedIn", href: "#" },
-      { name: "Instagram", href: "#" }
+      { name: "Instagram", href: "#" },
+      { name: "Facebook", href: "#" },
+      { name: "Twitter", href: "#" },
+      { name: "YouTube", href: "#" },
     ],
     links: {
       company: [
         { label: "About Us", href: "#" },
         { label: "Careers", href: "#" },
-        { label: "Press Kit", href: "#" },
-        { label: "Brand Guidelines", href: "#" }
-      ],
-      legal: [
-        { label: "Privacy Policy", href: "#" },
-        { label: "Terms of Service", href: "#" },
-        { label: "Refund Policy", href: "#" },
-        { label: "Security", href: "#" }
-      ],
-      resources: [
         { label: "Blog", href: "#" },
+        { label: "Contact Us", href: "#" },
+        { label: "Press Kit", href: "#" },
+      ],
+      services: [
+        { label: "Appliance Repair", href: "#" },
+        { label: "Maintenance", href: "#" },
+        { label: "Installation", href: "#" },
+        { label: "Annual Maintenance", href: "#" },
+        { label: "Warranty", href: "#" },
+      ],
+      support: [
         { label: "Help Center", href: "#" },
-        { label: "Tech Academy", href: "#" },
-        { label: "Service Areas", href: "#" }
-      ]
+        { label: "FAQs", href: "#faqs" },
+        { label: "Privacy Policy", href: "#" },
+        { label: "Terms & Conditions", href: "#" },
+        { label: "Cancellation Policy", href: "#" },
+      ],
+      partners: [
+        { label: "Become a Technician", href: "#" },
+        { label: "Partner With Us", href: "#" },
+        { label: "Service Centers", href: "#" },
+      ],
     }
   }
 };

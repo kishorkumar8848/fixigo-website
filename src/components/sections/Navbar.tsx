@@ -2,26 +2,45 @@
 
 import React, { useState, useEffect } from "react";
 import { Wrench, Menu, X, ArrowDownToLine } from "lucide-react";
-import Button from "../ui/Button";
-import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const sectionIds = ["home", "how-it-works", "faqs"];
+    const observers: IntersectionObserver[] = [];
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
+      );
+
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
+
   const navLinks = [
-    { label: "Services", href: "#services" },
-    { label: "How It Works", href: "#how-it-works" },
-    { label: "Why Choose Us", href: "#why-choose-us" },
-    { label: "FAQs", href: "#faqs" },
+    { label: "Home", href: "#home", id: "home" },
+    { label: "How it works", href: "#how-it-works", id: "how-it-works" },
+    { label: "FAQ", href: "#faqs", id: "faqs" },
   ];
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -35,58 +54,66 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl rounded-full border-[3px] border-slate-950 bg-[#0c1624] px-6 py-2.5 shadow-[4px_4px_0px_0px_#000000] flex items-center justify-between transition-all duration-300 backdrop-blur-md">
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100 py-3"
+            : "bg-white py-5"
+        }`}
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <a
-            href="#"
-            onClick={(e) => handleLinkClick(e, "#")}
-            className="flex items-center gap-2 font-bold text-xl text-white group select-none"
+            href="#home"
+            onClick={(e) => handleLinkClick(e, "#home")}
+            className="flex items-center gap-2.5 font-bold group select-none"
           >
-            <div className="h-11 w-11 rounded-2xl bg-[#1D58F6] border-[3px] border-slate-950 flex items-center justify-center shadow-[2px_2px_0px_0px_#000000] transition-all duration-300 group-hover:scale-105 overflow-hidden">
-              <Wrench className="h-5.5 w-5.5 text-white group-hover:rotate-[360deg] transition-transform duration-700 ease-out origin-center" />
+            <div className="h-10 w-10 rounded-full bg-[#1D58F6] flex items-center justify-center">
+              <Wrench className="h-5 w-5 text-white" />
             </div>
-            <span className="font-extrabold text-2xl tracking-tight text-white">
-              Fixi<span className="text-[#1D58F6]">go</span>
+            <span className="font-extrabold text-2xl tracking-tight text-slate-900">
+              Fixigo
             </span>
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-4">
+          <nav className="hidden md:flex items-center gap-10">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleLinkClick(e, link.href)}
-                className="text-xs font-bold text-slate-350 hover:text-white uppercase tracking-wider transition-all duration-200 border-2 border-transparent hover:border-slate-950 hover:bg-[#1D58F6] hover:shadow-[3px_3px_0px_0px_#000000] hover:scale-105 rounded-tl-[16px] rounded-br-[16px] rounded-tr-[4px] rounded-bl-[4px] px-3.5 py-1.5"
+                className={`relative text-sm font-semibold transition-colors duration-200 py-1 ${
+                  activeSection === link.id
+                    ? "text-slate-900"
+                    : "text-slate-600 hover:text-slate-900"
+                }`}
               >
                 {link.label}
+                {activeSection === link.id && (
+                  <span className="absolute -bottom-1 left-0 w-full h-[3px] bg-[#1D58F6] rounded-full" />
+                )}
               </a>
             ))}
           </nav>
 
-          {/* Right CTAs */}
-          <div className="hidden md:flex items-center gap-4">
-            <Button
-              variant="glow"
-              size="sm"
-              href="#download"
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector("#download")?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="border-2 border-slate-950 rounded-full font-bold shadow-[2px_2px_0px_0px_#000000] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_#000000] transition-all cursor-pointer"
-              icon={<ArrowDownToLine className="h-4 w-4" />}
+          {/* Download App CTA */}
+          <div className="hidden md:flex items-center">
+            <a
+              href="/downloads/fixigo.apk"
+              download
+              className="px-6 py-2.5 bg-slate-950 hover:bg-slate-900 text-white rounded-full font-semibold transition-all duration-200 flex items-center gap-2 text-sm cursor-pointer"
             >
-              Download App
-            </Button>
+              <span>Download App</span>
+              <ArrowDownToLine className="h-4 w-4" />
+            </a>
           </div>
 
-          {/* Mobile Menu Actions */}
+          {/* Mobile Menu Toggle */}
           <div className="flex md:hidden items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex h-9 w-9 items-center justify-center rounded-full border-[3px] border-slate-950 text-white bg-slate-900 shadow-[2px_2px_0px_0px_#000000] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_#000000] transition-all focus:outline-none"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-800 bg-white"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -95,46 +122,33 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Drawer Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-x-4 top-[78px] z-45 md:hidden border-[3px] border-slate-950 bg-[#0c1624] px-6 py-6 rounded-[28px] shadow-[4px_4px_0px_0px_#000000] backdrop-blur-lg flex flex-col gap-5 text-white"
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-x-4 top-[74px] z-50 md:hidden border border-slate-200 bg-white px-6 py-6 rounded-3xl shadow-xl flex flex-col gap-5">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={(e) => handleLinkClick(e, link.href)}
+              className={`text-base font-semibold py-1.5 transition-colors ${
+                activeSection === link.id ? "text-[#1D58F6]" : "text-slate-700"
+              }`}
+            >
+              {link.label}
+            </a>
+          ))}
+          <hr className="border-slate-100" />
+          <a
+            href="/downloads/fixigo.apk"
+            download
+            onClick={() => setMobileMenuOpen(false)}
+            className="w-full text-center px-6 py-2.5 bg-slate-950 text-white rounded-full font-semibold flex items-center justify-center gap-2 text-sm"
           >
-            <div className="flex flex-col gap-5">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={(e) => handleLinkClick(e, link.href)}
-                  className="text-base font-bold text-slate-200 hover:text-white uppercase tracking-wider text-sm"
-                >
-                  {link.label}
-                </a>
-              ))}
-              <hr className="border-slate-800" />
-              <Button
-                variant="glow"
-                size="md"
-                href="#download"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setMobileMenuOpen(false);
-                  document.querySelector("#download")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="w-full border-2 border-slate-950 rounded-full font-bold shadow-[2px_2px_0px_0px_#000000]"
-                icon={<ArrowDownToLine className="h-4 w-4" />}
-              >
-                Download App
-              </Button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <span>Download App</span>
+            <ArrowDownToLine className="h-4 w-4" />
+          </a>
+        </div>
+      )}
     </>
   );
 }

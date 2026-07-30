@@ -1,28 +1,26 @@
 "use client";
 
 import React from "react";
-import { Wrench, Mail, Phone, MapPin, HelpCircle } from "lucide-react";
+import { Wrench, Heart } from "lucide-react";
 import { APP_CONFIG } from "@/config/app";
 
-// Social icon mapping helper
 const socialIcons = (name: string) => {
-  const cn = "h-4.5 w-4.5 transition-colors fill-current";
   switch (name) {
     case "Twitter":
       return (
-        <svg className={cn} viewBox="0 0 24 24">
+        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
         </svg>
       );
-    case "LinkedIn":
+    case "Facebook":
       return (
-        <svg className={cn} viewBox="0 0 24 24">
-          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z" />
+        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
         </svg>
       );
     case "Instagram":
       return (
-        <svg className="h-4.5 w-4.5 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
           <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
           <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
@@ -30,68 +28,69 @@ const socialIcons = (name: string) => {
       );
     case "YouTube":
       return (
-        <svg className={cn} viewBox="0 0 24 24">
+        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
           <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.108C19.53 3.5 12 3.5 12 3.5s-7.53 0-9.388.555A3.002 3.002 0 0 0 .502 6.163C0 8.07 0 12 0 12s0 3.93.502 5.837a3.002 3.002 0 0 0 2.11 2.108C4.47 20.5 12 20.5 12 20.5s7.53 0 9.388-.555a3.003 3.003 0 0 0 2.11-2.108C24 15.93 24 12 24 12s0-3.93-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
         </svg>
       );
     default:
-      return <HelpCircle className="h-4.5 w-4.5 transition-colors" />;
+      return null;
   }
 };
 
+function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
+  return (
+    <div className="flex flex-col gap-4">
+      <h4 className="text-sm font-bold text-slate-900">
+        {title}
+        <span className="block w-8 h-[3px] bg-[#1D58F6] rounded-full mt-1.5" />
+      </h4>
+      <ul className="flex flex-col gap-2.5">
+        {links.map((link) => (
+          <li key={link.label}>
+            <a
+              href={link.href}
+              className="text-sm text-slate-600 hover:text-[#1D58F6] transition-colors"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export default function Footer() {
   return (
-    <footer className="relative bg-slate-900 text-slate-400 dark:bg-slate-950 border-t border-slate-800 pt-12 pb-8 overflow-hidden">
-      {/* Decorative glows */}
-      <div className="absolute left-1/4 bottom-0 h-80 w-80 rounded-full bg-blue-500/5 blur-3xl pointer-events-none" />
+    <footer className="relative bg-white border-t border-slate-100 pt-16 pb-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Top Segment: Logo, Links & Contacts */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
-          
-          {/* Logo & Brand Details Column */}
-          <div className="lg:col-span-5 flex flex-col gap-6 text-left">
-            <a href="#" className="flex items-center gap-2 font-bold text-xl text-white group w-[fit-content]">
-              <svg viewBox="0 0 100 100" className="h-9 w-9 shadow-md shadow-blue-500/10 group-hover:scale-105 transition-transform duration-300 select-none">
-                <rect width="100" height="100" rx="24" fill="#1D58F6" />
-                <path d="M32 20 h35 l-8 13 H45 v11 h10 l-7 12 H45 v20 c0 2.2-1.8 4-4 4 H36 c-2.2 0-4-1.8-4-4 V20 Z" fill="#FFFFFF" />
-              </svg>
-              <span>
-                Fixi<span className="text-[#1D58F6]">go</span>
+        {/* Six Column Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 lg:gap-8">
+
+          {/* Brand Column */}
+          <div className="col-span-2 md:col-span-3 lg:col-span-1 flex flex-col gap-5">
+            <a href="#home" className="flex items-center gap-2.5 select-none">
+              <div className="h-9 w-9 rounded-xl bg-[#1D58F6] flex items-center justify-center">
+                <Wrench className="h-4.5 w-4.5 text-white" />
+              </div>
+              <span className="font-extrabold text-xl tracking-tight text-slate-900">
+                Fixigo
               </span>
             </a>
-            
-            <p className="text-sm text-slate-400 leading-relaxed font-normal max-w-xs">
-              Fixigo is simplifying the home appliance lifecycle—providing instant doorstep repairs, verified installations, dynamic warranty vaulting, and professional preventative maintenance.
+
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Smart appliance care at your fingertips. We fix it, you relax.
             </p>
 
-            {/* Direct Contacts */}
-            <div className="flex flex-col gap-3.5 text-xs font-medium">
-              <a href={`mailto:${APP_CONFIG.contact.email}`} className="flex items-center gap-3 hover:text-white transition-colors">
-                <Mail className="h-4.5 w-4.5 text-[#1D58F6] shrink-0" />
-                <span>{APP_CONFIG.contact.email}</span>
-              </a>
-              {APP_CONFIG.contact.phone && (
-                <a href={`tel:${APP_CONFIG.contact.phone.replace(/\s+/g, '')}`} className="flex items-center gap-3 hover:text-white transition-colors">
-                  <Phone className="h-4.5 w-4.5 text-blue-400 shrink-0" />
-                  <span>{APP_CONFIG.contact.phone}</span>
-                </a>
-              )}
-              <div className="flex items-start gap-3">
-                <MapPin className="h-4.5 w-4.5 text-slate-500 shrink-0 mt-0.5" />
-                <span className="leading-relaxed text-slate-400">{APP_CONFIG.contact.address}</span>
-              </div>
-            </div>
-
-            {/* Social Links */}
-            <div className="flex gap-3">
+            {/* Social Icons */}
+            <div className="flex gap-2.5">
               {APP_CONFIG.contact.socials.map((soc) => (
                 <a
                   key={soc.name}
                   href={soc.href}
                   aria-label={soc.name}
-                  className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-800 text-slate-400 hover:bg-blue-600 hover:text-white transition-colors dark:bg-slate-900"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-[#1D58F6] hover:text-white transition-colors"
                 >
                   {socialIcons(soc.name)}
                 </a>
@@ -99,56 +98,48 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links Columns */}
-          <div className="lg:col-span-7 grid grid-cols-3 gap-6 text-left">
-            
-            {/* Column 1: Company */}
-            <div className="flex flex-col gap-4">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">Company</h4>
-              <ul className="flex flex-col gap-2.5 text-sm font-semibold">
-                {APP_CONFIG.contact.links.company.map((link) => (
-                  <li key={link.label}>
-                    <a href={link.href} className="hover:text-white transition-colors">{link.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <FooterColumn title="Company" links={APP_CONFIG.contact.links.company} />
+          <FooterColumn title="Services" links={APP_CONFIG.contact.links.services} />
+          <FooterColumn title="Support" links={APP_CONFIG.contact.links.support} />
+          <FooterColumn title="For Partners" links={APP_CONFIG.contact.links.partners} />
 
-            {/* Column 2: Resources */}
-            <div className="flex flex-col gap-4">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">Resources</h4>
-              <ul className="flex flex-col gap-2.5 text-sm font-semibold">
-                {APP_CONFIG.contact.links.resources.map((link) => (
-                  <li key={link.label}>
-                    <a href={link.href} className="hover:text-white transition-colors">{link.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Column 3: Legal */}
-            <div className="flex flex-col gap-4">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">Legal</h4>
-              <ul className="flex flex-col gap-2.5 text-sm font-semibold">
-                {APP_CONFIG.contact.links.legal.map((link) => (
-                  <li key={link.label}>
-                    <a href={link.href} className="hover:text-white transition-colors">{link.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
+          {/* Get the App Column */}
+          <div className="flex flex-col gap-4">
+            <h4 className="text-sm font-bold text-slate-900">
+              Get the App
+              <span className="block w-8 h-[3px] bg-[#1D58F6] rounded-full mt-1.5" />
+            </h4>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Download the Fixigo app and manage everything on the go.
+            </p>
+            <a
+              href={APP_CONFIG.playStoreUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 bg-slate-950 text-white rounded-xl px-4 py-2.5 hover:bg-slate-900 transition-colors w-fit"
+            >
+              <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z" />
+              </svg>
+              <div className="text-left leading-none">
+                <p className="text-[9px] uppercase tracking-wider opacity-80">GET IT ON</p>
+                <p className="text-sm font-bold mt-0.5">Google Play</p>
+              </div>
+            </a>
           </div>
 
         </div>
 
-        {/* Bottom Segment: Copyright & Credits */}
-        <div className="mt-16 pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-semibold text-slate-500">
-          <p>© {new Date().getFullYear()} Fixigo Technologies Private Limited. All rights reserved.</p>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-slate-350">Privacy Policy</a>
-            <span>•</span>
-            <a href="#" className="hover:text-slate-350">Terms of Service</a>
+        {/* Bottom Bar */}
+        <div className="mt-14 pt-6 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-slate-500">
+            © 2025 Fixigo. All rights reserved.
+          </p>
+          <div className="flex items-center gap-1.5 text-[#1D58F6]">
+            <Heart className="h-4 w-4" strokeWidth={2} />
+            <span className="font-handwritten text-base font-bold italic">
+              Made with care, for your comfort.
+            </span>
           </div>
         </div>
 

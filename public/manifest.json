@@ -1,0 +1,17 @@
+{
+  "name": "Fixigo - Smart Home Appliance Care",
+  "short_name": "Fixigo",
+  "description": "Simplify the entire lifecycle of your home appliances. Book instant repairs, schedule certified installations, estimate resale values, and manage warranties.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1D58F6",
+  "icons": [
+    {
+      "src": "/fixigo_logo_smart_f.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

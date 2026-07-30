@@ -2,6 +2,7 @@
 
 @theme {
   --font-sans: var(--font-sans);
+  --font-handwritten: var(--font-handwritten), cursive;
   
   /* Brand-specific colors matching the logo blue */
   --color-brand-blue-50: #f0f4ff;
@@ -10,9 +11,16 @@
   --color-brand-blue-600: #1D58F6; /* Exact Logo Royal Blue */
   --color-brand-blue-700: #1444c9;
   
+  --color-brand-yellow-400: #FDE047;
+  --color-brand-yellow-500: #FBBF24;
+  
   --color-brand-sky-50: #f0f9ff;
   --color-brand-sky-500: #0ea5e9;
   --color-brand-sky-600: #0284c7;
+}
+
+.font-handwritten {
+  font-family: var(--font-handwritten), cursive;
 }
 
 /* Custom styling variables matching White & Blue theme */
